@@ -121,15 +121,15 @@ class ArrayVisualizer(tk.Tk):
         btn_frame.columnconfigure(1, weight=1)
         btn_frame.columnconfigure(2, weight=1)
         
-        tk.Button(btn_frame, text="🔍 get_second", command=self._exec_1d_get_second,
+        tk.Button(btn_frame, text="2do Elemento", command=self._exec_1d_get_second,
                  bg=ACCENT2, fg="white", relief="flat", font=("Segoe UI", 8),
                  pady=4).grid(row=0, column=0, padx=2, sticky="ew")
         
-        tk.Button(btn_frame, text="🔎 search_value", command=self._exec_1d_search,
+        tk.Button(btn_frame, text="Insertar pos 3", command=self._exec_1d_insert,
                  bg=ACCENT2, fg="white", relief="flat", font=("Segoe UI", 8),
                  pady=4).grid(row=0, column=1, padx=2, sticky="ew")
         
-        tk.Button(btn_frame, text="🔄 sort", command=self._exec_1d_sort,
+        tk.Button(btn_frame, text="Buscar Valor", command=self._exec_1d_search,
                  bg=ACCENT2, fg="white", relief="flat", font=("Segoe UI", 8),
                  pady=4).grid(row=0, column=2, padx=2, sticky="ew")
     
@@ -137,27 +137,87 @@ class ArrayVisualizer(tk.Tk):
         """Ejecuta get_second_element"""
         try:
             result = methods.get_second_element(self.arr1d)
-            self.info_1d.config(text=f"get_second_element() → {result}")
+            self.info_1d.config(text=f"✓ 2do elemento: {result}", fg=TEXT)
         except Exception as e:
-            self.info_1d.config(text=f"Error: {str(e)}", fg=DANGER)
+            self.info_1d.config(text=f"❌ Error: {str(e)}", fg=DANGER)
+    
+    def _exec_1d_insert(self):
+        """Ejecuta insert_value_1d en posición 3"""
+        try:
+            result = methods.insert_value_1d(self.arr1d, 3, "Estructura de datos")
+            self.info_1d.config(text=f"✓ Insertado 'Estructura de datos' en pos 3", fg=TEXT)
+            self._draw_1d()
+        except Exception as e:
+            self.info_1d.config(text=f"❌ Error: {str(e)}", fg=DANGER)
     
     def _exec_1d_search(self):
-        """Ejecuta search_value_1d"""
-        val = simpledialog.askinteger("Buscar", "Ingresa el valor a buscar:")
+        """Ejecuta search_value_1d para 'Estructura de datos'"""
+        try:
+            result = methods.search_value_1d(self.arr1d, "Estructura de datos")
+            self.info_1d.config(text=f"✓ Posición de 'Estructura de datos': {result}", fg=TEXT)
+        except Exception as e:
+            self.info_1d.config(text=f"❌ Error: {str(e)}", fg=DANGER)
+    
+    def _build_2d_methods(self):
+        """Construye botones para métodos 2D"""
+        # Limpiar frame anterior
+        for widget in self.methods_frame_2d.winfo_children():
+            widget.destroy()
+        
+        if not self.created_2d:
+            return
+        
+        self.methods_frame_2d.columnconfigure(0, weight=1)
+        self.methods_frame_2d.columnconfigure(1, weight=1)
+        self.methods_frame_2d.columnconfigure(2, weight=1)
+        
+        tk.Label(self.methods_frame_2d, text="Métodos:", bg=PANEL, fg=TEXT,
+                font=("Segoe UI", 9, "bold")).pack(anchor="w", pady=(4, 4))
+        
+        btn_frame = tk.Frame(self.methods_frame_2d, bg=PANEL)
+        btn_frame.pack(fill="x")
+        btn_frame.columnconfigure(0, weight=1)
+        btn_frame.columnconfigure(1, weight=1)
+        btn_frame.columnconfigure(2, weight=1)
+        
+        tk.Button(btn_frame, text="Obtener [1][1]", command=self._exec_2d_get,
+                 bg=ACCENT, fg="white", relief="flat", font=("Segoe UI", 8),
+                 pady=4).grid(row=0, column=0, padx=2, sticky="ew")
+        
+        tk.Button(btn_frame, text="Eliminar [2][2]", command=self._exec_2d_remove,
+                 bg=ACCENT, fg="white", relief="flat", font=("Segoe UI", 8),
+                 pady=4).grid(row=0, column=1, padx=2, sticky="ew")
+        
+        tk.Button(btn_frame, text="Buscar Valor", command=self._exec_2d_search,
+                 bg=ACCENT, fg="white", relief="flat", font=("Segoe UI", 8),
+                 pady=4).grid(row=0, column=2, padx=2, sticky="ew")
+    
+    def _exec_2d_get(self):
+        """Ejecuta get_element_2d para [1][1]"""
+        try:
+            result = methods.get_element_2d(self.arr2d, 1, 1)
+            self.info_2d.config(text=f"✓ Elemento [1][1]: {result}", fg=TEXT)
+        except Exception as e:
+            self.info_2d.config(text=f"❌ Error: {str(e)}", fg=DANGER)
+    
+    def _exec_2d_remove(self):
+        """Ejecuta remove_value_2d para [2][2]"""
+        try:
+            result = methods.remove_value_2d(self.arr2d, 2, 2)
+            self.info_2d.config(text=f"✓ Eliminado elemento en [2][2]", fg=TEXT)
+            self._draw_2d()
+        except Exception as e:
+            self.info_2d.config(text=f"❌ Error: {str(e)}", fg=DANGER)
+    
+    def _exec_2d_search(self):
+        """Ejecuta search_value_2d"""
+        val = simpledialog.askstring("Buscar", "Ingresa el valor a buscar:")
         if val is not None:
             try:
-                result = methods.search_value_1d(self.arr1d, val)
-                self.info_1d.config(text=f"search_value_1d({val}) → {result}")
+                result = methods.search_value_2d(self.arr2d, val)
+                self.info_2d.config(text=f"✓ '{val}' en posición: {result}", fg=TEXT)
             except Exception as e:
-                self.info_1d.config(text=f"Error: {str(e)}", fg=DANGER)
-    
-    def _exec_1d_sort(self):
-        """Ejecuta sort_1d"""
-        try:
-            result = methods.sort_1d(self.arr1d)
-            self.info_1d.config(text=f"sort_1d() → {result}")
-        except Exception as e:
-            self.info_1d.config(text=f"Error: {str(e)}", fg=DANGER)
+                self.info_2d.config(text=f"❌ Error: {str(e)}", fg=DANGER)
     
     def _create_1d(self):
         """Dialogo para crear array 1D"""
@@ -205,6 +265,7 @@ class ArrayVisualizer(tk.Tk):
             self.info_1d.config(text=f"✓ Array 1D creado con {size} elementos")
             self.created_1d = True
             self.btn_create_1d.config(state="disabled", text="✓ Array Creado")
+            self._build_1d_methods()
             dialog.destroy()
         
         tk.Button(dialog, text="Crear", command=create, bg=ACCENT, fg="white",
