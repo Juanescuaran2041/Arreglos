@@ -17,8 +17,8 @@ CELL_BORDER = "#4f4f7a"
 CELL_HL     = "#7c3aed"
 DANGER      = "#ef4444"
 
-CELL_W = 60
-CELL_H = 50
+CELL_W = 140
+CELL_H = 70
 
 
 # App ArrayVisualizer
@@ -84,7 +84,7 @@ class ArrayVisualizer(tk.Tk):
         self.btn_create_1d.pack(pady=(12, 12), padx=12, fill="x")
         
         # ─── Canvas visualización ──────────────────────────────────────────
-        self.canvas_1d = tk.Canvas(inner, bg=PANEL, highlightthickness=0, height=120)
+        self.canvas_1d = tk.Canvas(inner, bg=PANEL, highlightthickness=0, height=200)
         self.canvas_1d.pack(fill="both", expand=True, padx=12, pady=(0, 12))
         self.canvas_1d.bind("<Button-1>", self._click_cell_1d)
         
@@ -314,7 +314,8 @@ class ArrayVisualizer(tk.Tk):
             # Valor
             display = str(val) if val is not None else "∅"
             self.canvas_1d.create_text((x0+x1)//2, (y0+y1)//2, text=display,
-                                      fill=TEXT, font=("Consolas", 11, "bold"), tags=f"cell_{i}")
+                                      fill=TEXT, font=("Consolas", 9, "bold"), tags=f"cell_{i}",
+                                      width=int(CELL_W * 0.9))
             
             # Índice
             self.canvas_1d.create_text((x0+x1)//2, y1+12, text=f"[{i}]",
