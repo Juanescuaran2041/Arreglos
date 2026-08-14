@@ -1,25 +1,18 @@
 def get_second_element(array: list):
-    """Obtiene el segundo elemento del array 1D (índice 1)"""
-    if len(array) > 1:
-        return array[1]
-    return None
+    return array[1]
+    
 
 
 def insert_value_1d(array: list, index: int, value):
-    """Inserta un valor en la posición especificada (1D)"""
     if 0 <= index <= len(array):
         array.insert(index, value)
     return array
 
 def search_value_1d(array: list, value):
-    """Busca un valor en el array 1D y retorna la posición"""
     for i in range(len(array)):
         if array[i] == value:
-            return i
+            return f"El valor {value} se encuentra en la posición {i}"
     return None
-
-
-
 
 def get_element_2d(array: list, row: int, col: int):
     if 0 <= row < len(array) and 0 <= col < len(array[row]):
